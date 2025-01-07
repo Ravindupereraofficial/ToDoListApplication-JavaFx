@@ -1,14 +1,21 @@
 package Controller.todolist;
+import Controller.completedtask.CompletedTaskController;
 import com.jfoenix.controls.JFXListView;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import models.ToDoList;
 
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ToDoListFormController implements Initializable {
@@ -27,29 +34,21 @@ public class ToDoListFormController implements Initializable {
 
     private void loadtask() {
         try {
-            // Load tasks from the controller
             ArrayList<ToDoList> todoListArrayList = ToDoListController.getInstance().loadTasks();
 
-            // Check if the list is not empty
-            if (todoListArrayList.isEmpty()) {
+            if (todoListArrayList == null || todoListArrayList.isEmpty()) {
                 System.out.println("No tasks to display.");
+                return;
             }
 
-            // Loop through each task in the list
-            todoListArrayList.forEach(todoList -> {
-                HBox hBox = new HBox();
-                hBox.setSpacing(30);  // Set spacing between items in the HBox
+            for (ToDoList todoList : todoListArrayList) {
+                HBox hBox = new HBox(30);
                 hBox.getStyleClass().add("task-card");
 
-                // Add task name label if it's not null
-                String taskText = todoList.getTaskName();
-                if (taskText != null && !taskText.isEmpty()) {
-                    Label taskName = new Label("Task: " + taskText);
-                    taskName.getStyleClass().add("task-name");
-                    hBox.getChildren().add(taskName);
-                }
+                Label newTask = new Label("Task: " + todoList.getTaskName());
+                newTask.getStyleClass().add("task-name");
+                hBox.getChildren().add(newTask);
 
-                // Add date label if it's not null
                 String taskDate = todoList.getDate();
                 if (taskDate != null && !taskDate.isEmpty()) {
                     Label date = new Label("Date: " + taskDate);
@@ -57,20 +56,31 @@ public class ToDoListFormController implements Initializable {
                     hBox.getChildren().add(date);
                 }
 
-                // Add checkbox for completion
                 CheckBox checkBox = new CheckBox("Completed");
                 checkBox.getStyleClass().add("task-checkbox");
                 hBox.getChildren().add(checkBox);
 
-                // Add HBox to the ListView
                 todolistview.getItems().add(hBox);
-            });
 
-            // Log success message
+                checkBox.setOnAction(actionEvent -> {
+                    if (checkBox.isSelected()) {
+                        String currentDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+
+                        if (CompletedTaskController.getInstance().completedTask(todoList.getTaskName(), currentDate) &&
+                                ToDoListController.getInstance().deleteCompletedTask(todoList.getTaskName())) {
+                            new Alert(Alert.AlertType.INFORMATION, "Task Finished").show();
+                            todolistview.getItems().remove(hBox);
+                        } else {
+                            new Alert(Alert.AlertType.ERROR, "Task operation failed").show();
+                        }
+                    }
+                });
+            }
+
             System.out.println("Tasks loaded successfully!");
         } catch (Exception e) {
-            // Handle any exceptions that occur during the task loading process
             System.err.println("Error loading tasks: " + e.getMessage());
+            new Alert(Alert.AlertType.ERROR, "Error loading tasks: " + e.getMessage()).show();
         }
     }
 
@@ -82,41 +92,54 @@ public class ToDoListFormController implements Initializable {
 
 
     public void btnAddTaskOnAction(ActionEvent actionEvent) {
-
         if (newTaskDatetxt.getValue() == null || newTaskNametxt.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Please fill in all fields!").show();
             return;
         }
 
         HBox hBox = new HBox();
-        hBox.setSpacing(30);  // Set spacing between items in the HBox
+        hBox.setSpacing(30);
         hBox.getStyleClass().add("task-card");
 
-        // Add task name label if it's not null
-        String taskText = newTaskNametxt.getText();
-        if (taskText != null && !taskText.isEmpty()) {
-            Label taskName = new Label("Task: " + taskText);
-            taskName.getStyleClass().add("task-name");
-            hBox.getChildren().add(taskName);
-        }
+        Label taskNameLabel = new Label("Task: " + newTaskNametxt.getText().trim());
+        taskNameLabel.getStyleClass().add("task-name");
+        hBox.getChildren().add(taskNameLabel);
 
-        // Add date label if it's not null
         String taskDate = newTaskDatetxt.getValue().toString();
-        if (taskDate != null && !taskDate.isEmpty()) {
-            Label date = new Label("Date: " + taskDate);
-            date.getStyleClass().add("task-date");
-            hBox.getChildren().add(date);
-        }
+        Label dateLabel = new Label("Date: " + taskDate);
+        dateLabel.getStyleClass().add("task-date");
+        hBox.getChildren().add(dateLabel);
 
-        // Add checkbox for completion
         CheckBox checkBox = new CheckBox("Completed");
         checkBox.getStyleClass().add("task-checkbox");
         hBox.getChildren().add(checkBox);
 
-        // Add HBox to the ListView
         todolistview.getItems().add(hBox);
 
-        boolean taskAdded = ToDoListController.getInstance().addTask(new ToDoList(null, newTaskNametxt.getText(), taskDate, null));
+        checkBox.setOnAction(e -> {
+            if (checkBox.isSelected()) {
+                // Extract the task name from the Label in the HBox
+                String taskName = taskNameLabel.getText().replace("Task: ", "").trim();
+                String currentDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+
+                System.out.println("Marking task as completed: " + taskName + " on " + currentDate);
+
+                boolean taskCompleted = CompletedTaskController.getInstance().completedTask(taskName, currentDate);
+                boolean taskDeleted = ToDoListController.getInstance().deleteCompletedTask(taskName);
+
+                System.out.println("Task Completed: " + taskCompleted);
+                System.out.println("Task Deleted: " + taskDeleted);
+
+                if (taskCompleted && taskDeleted) {
+                    new Alert(Alert.AlertType.INFORMATION, "Task Finished").show();
+                    todolistview.getItems().remove(hBox);
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Task operation failed").show();
+                }
+            }
+        });
+
+        boolean taskAdded = ToDoListController.getInstance().addTask(new ToDoList(null, newTaskNametxt.getText().trim(), taskDate, null));
 
         if (taskAdded) {
             new Alert(Alert.AlertType.INFORMATION, "Task Added Successfully").show();
@@ -124,11 +147,18 @@ public class ToDoListFormController implements Initializable {
         } else {
             new Alert(Alert.AlertType.ERROR, "Task Addition Failed").show();
         }
-
     }
+
 
     private void cleartxts() {
         newTaskNametxt.clear();
         newTaskDatetxt.setValue(null);
+    }
+
+    public void btcViewCompletedTasksOnAction(ActionEvent actionEvent) throws IOException {
+        Stage stage=new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/completed_task.fxml"))));
+        stage.show();
+
     }
 }
