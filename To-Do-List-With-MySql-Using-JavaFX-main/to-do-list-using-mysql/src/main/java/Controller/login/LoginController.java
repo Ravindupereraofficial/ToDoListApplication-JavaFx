@@ -20,6 +20,7 @@ public class LoginController implements LoginService{
     @Override
     public boolean authenticateUser(String userName, String password) {
 
+
         try {
             ResultSet rst = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT user_id, username,password FROM user WHERE username='" + userName + "' AND password='" + password + "'");
             if(rst.next()){
