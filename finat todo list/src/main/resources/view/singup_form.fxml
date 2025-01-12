@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="450.0" prefWidth="600.0" style="-fx-font-family: 'Arial', sans-serif; -fx-background-color: #f8fafc;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.signup.SignUpFormController">
+   <children>
+      <!-- Main HBox Container -->
+      <HBox prefHeight="450.0" prefWidth="600.0">
+         <children>
+            <!-- Left Section with Branding -->
+            <VBox alignment="CENTER" prefHeight="450.0" prefWidth="300.0" spacing="20.0" style="-fx-background-color: #1E293B; -fx-padding: 30;">
+               <children>
+                  <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/icons8-add-user-male-100.png" />
+                     </image>
+                  </ImageView>
+                  <Label style="-fx-font-size: 26px; -fx-text-fill: #E2E8F0; -fx-font-weight: bold;" text="Welcome To" />
+                  <Label style="-fx-font-size: 18px; -fx-text-fill: #94A3B8;" text="TaskTactix" />
+                  <Label style="-fx-font-size: 14px; -fx-text-fill: #CBD5E1; -fx-wrap-text: true;" text="Create your account and get started with TaskTactix!" />
+               </children>
+            </VBox>
+
+            <!-- Right Section for Sign-Up Form -->
+            <VBox alignment="CENTER" prefHeight="450.0" prefWidth="300.0" spacing="20.0" style="-fx-padding: 30; -fx-background-color: #FFFFFF; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);">
+               <children>
+                  <!-- Form Title -->
+                  <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #0F172A;" text="Sign Up Now!" />
+
+                  <!-- User ID Display -->
+                  <Label style="-fx-font-size: 14px; -fx-text-fill: #475569;" text="User ID" />
+                  <Label fx:id="userIdDisplay" style="-fx-font-size: 14px; -fx-background-color: #F1F5F9; -fx-padding: 10; -fx-border-color: #CBD5E1; -fx-border-radius: 5; -fx-text-fill: #334155;" text="C000#" />
+
+                  <!-- User Name Input -->
+                  <Label style="-fx-font-size: 14px; -fx-text-fill: #475569;" text="User Name" />
+                  <TextField fx:id="txtNewUserName" promptText="Enter your username" style="-fx-pref-height: 40px; -fx-background-color: #F8FAFC; -fx-border-color: #CBD5E1; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14px;" />
+
+                  <!-- Password Input -->
+                  <Label style="-fx-font-size: 14px; -fx-text-fill: #475569;" text="Password" />
+                  <PasswordField fx:id="txtNewUserPassword" promptText="Enter your password" style="-fx-pref-height: 40px; -fx-background-color: #F8FAFC; -fx-border-color: #CBD5E1; -fx-border-radius: 5; -fx-padding: 10; -fx-font-size: 14px;" />
+
+                  <!-- Sign-Up Button -->
+                  <Button onAction="#btnSingUpOnAction" style="-fx-background-color: #2563EB; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-border-radius: 5; -fx-pref-height: 40px; -fx-cursor: hand;" text="Sign Up Now!" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
