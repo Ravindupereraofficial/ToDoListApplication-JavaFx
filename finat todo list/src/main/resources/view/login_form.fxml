@@ -18,9 +18,9 @@
             <!-- Branding Section -->
             <VBox alignment="CENTER" prefHeight="450.0" prefWidth="300.0" spacing="20.0" style="-fx-background-color: #00796B; -fx-padding: 30;">
                <children>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="308.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Images/icons8-user-100%20(1).png" />
+                        <Image url="@../Images/undraw_login_wqkt-removebg-preview.png" />
                      </image>
                   </ImageView>
                   <Label style="-fx-font-size: 24px; -fx-font-family: 'Verdana', sans-serif; -fx-text-fill: #E0F2F1; -fx-font-weight: bold;" text="Welcome Back" />
