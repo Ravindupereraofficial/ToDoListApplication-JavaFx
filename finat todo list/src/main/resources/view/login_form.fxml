@@ -31,12 +31,12 @@
             <!-- Login Section -->
             <VBox alignment="CENTER" prefHeight="450.0" prefWidth="300.0" spacing="20.0" style="-fx-padding: 30; -fx-background-color: #E0F2F1;">
                <children>
-                  <Label style="-fx-font-size: 20px; -fx-font-family: 'Verdana', sans-serif; -fx-font-weight: bold; -fx-text-fill: #004D40;" text="Log In" />
+                  <Label prefHeight="26.0" prefWidth="309.0" style="-fx-font-size: 25; -fx-font-family: 'Verdana', sans-serif; -fx-font-weight: bold; -fx-text-fill: #004D40;" text="Log In" />
                   <TextField fx:id="txtusername" promptText="Email Address" style="-fx-pref-height: 40px; -fx-background-color: white; -fx-border-color: #80CBC4; -fx-border-radius: 6; -fx-padding: 10; -fx-font-family: 'Arial', sans-serif; -fx-font-size: 14px;" />
                   <PasswordField fx:id="txtpassword" promptText="Password" style="-fx-pref-height: 40px; -fx-background-color: white; -fx-border-color: #80CBC4; -fx-border-radius: 6; -fx-padding: 10; -fx-font-family: 'Arial', sans-serif; -fx-font-size: 14px;" />
-                  <Button onAction="#btnLoginOnAction" style="-fx-background-color: #00796B; -fx-text-fill: white; -fx-font-family: 'Verdana', sans-serif; -fx-font-size: 16px; -fx-border-radius: 6; -fx-pref-height: 40px; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="Login" />
-                  <Label style="-fx-font-size: 12px; -fx-font-family: 'Arial', sans-serif; -fx-text-fill: #00796B; -fx-underline: true; -fx-cursor: hand;" text="Forgot Password?" />
-                  <Button onAction="#btnSingUpOnAction" style="-fx-background-color: transparent; -fx-border-color: #00796B; -fx-text-fill: #00796B; -fx-font-family: 'Verdana', sans-serif; -fx-font-size: 14px; -fx-border-radius: 6; -fx-pref-height: 40px; -fx-cursor: hand;" text="Sign Up" />
+                  <Button onAction="#btnLoginOnAction" prefWidth="346.0" style="-fx-background-color: #00796B; -fx-text-fill: white; -fx-font-family: 'Verdana', sans-serif; -fx-font-size: 16px; -fx-border-radius: 6; -fx-pref-height: 40px; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 1);" text="Login" />
+                  <Label prefHeight="15.0" prefWidth="272.0" style="-fx-font-size: 12px; -fx-font-family: 'Arial', sans-serif; -fx-text-fill: #00796B; -fx-underline: true; -fx-cursor: hand;" text="Forgot Password?" />
+                  <Button onAction="#btnSingUpOnAction" prefWidth="497.0" style="-fx-background-color: transparent; -fx-border-color: #00796B; -fx-text-fill: #00796B; -fx-font-family: 'Verdana', sans-serif; -fx-font-size: 14px; -fx-border-radius: 6; -fx-pref-height: 40px; -fx-cursor: hand;" text="Sign Up" />
                </children>
             </VBox>
          </children>
