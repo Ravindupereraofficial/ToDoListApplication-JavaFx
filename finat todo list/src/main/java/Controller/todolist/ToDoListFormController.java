@@ -1,4 +1,5 @@
 package Controller.todolist;
+
 import Controller.completedtask.CompletedTaskController;
 import com.jfoenix.controls.JFXListView;
 import javafx.event.ActionEvent;
@@ -19,7 +20,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ToDoListFormController implements Initializable {
-
 
     public Label usenametxt;
     public TextField newTaskNametxt;
@@ -44,32 +44,31 @@ public class ToDoListFormController implements Initializable {
             for (ToDoList todoList : todoListArrayList) {
                 HBox hBox = new HBox();
                 hBox.setSpacing(30);
-                hBox.setStyle("-fx-background-color: linear-gradient(to right, #A1C4FD, #C2E9FB); " + // Blue gradient
-                        "-fx-border-color: #4A90E2; " + // Blue border for the task container
-                        "-fx-border-width: 2px; " + // Set border width
-                        "-fx-border-radius: 10; " + // Rounded corners for the border
-                        "-fx-background-radius: 10; " + // Rounded corners for the background
-                        "-fx-padding: 15; " +
-                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);");
+                hBox.setStyle("-fx-background-color: linear-gradient(to right, #E6F7E6, #D1F0D1); " + // Light green gradient
+                        "-fx-border-color: #90C490; " + // Soft green border
+                        "-fx-border-width: 1.5px; " +
+                        "-fx-border-radius: 8; " +
+                        "-fx-background-radius: 8; " +
+                        "-fx-padding: 12; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 1, 1);");
 
                 Label taskNameLabel = new Label("Task: " + todoList.getTaskName());
-                taskNameLabel.setStyle("-fx-font-size: 18px; " + // Reduced font size for task name
+                taskNameLabel.setStyle("-fx-font-size: 16px; " +
                         "-fx-font-weight: bold; " +
-                        "-fx-text-fill: #333333; " +
-                        "-fx-padding-right: 20px;");
+                        "-fx-text-fill: #2F4F2F;"); // Dark green for task name
                 hBox.getChildren().add(taskNameLabel);
 
                 String taskDate = todoList.getDate();
                 if (taskDate != null && !taskDate.isEmpty()) {
                     Label dateLabel = new Label("Date: " + taskDate);
-                    dateLabel.setStyle("-fx-font-size: 16px; " +
-                            "-fx-text-fill: #555555;"); // Slightly lighter gray for the date
+                    dateLabel.setStyle("-fx-font-size: 14px; " +
+                            "-fx-text-fill: #6B8E6B;"); // Soft green for date
                     hBox.getChildren().add(dateLabel);
                 }
 
                 CheckBox checkBox = new CheckBox("Completed");
                 checkBox.setStyle("-fx-font-size: 14px; " +
-                        "-fx-text-fill: #444444; " +
+                        "-fx-text-fill: #4C7A4C; " + // Medium green for checkbox text
                         "-fx-cursor: hand; " +
                         "-fx-alignment: center;");
                 hBox.getChildren().add(checkBox);
@@ -98,13 +97,10 @@ public class ToDoListFormController implements Initializable {
         }
     }
 
-
-
-    private void setName(){
-        String name=ToDoListController.getInstance().getuUserName();
+    private void setName() {
+        String name = ToDoListController.getInstance().getuUserName();
         usenametxt.setText(name);
     }
-
 
     public void btnAddTaskOnAction(ActionEvent actionEvent) {
         if (newTaskDatetxt.getValue() == null || newTaskNametxt.getText().isEmpty()) {
@@ -114,54 +110,43 @@ public class ToDoListFormController implements Initializable {
 
         HBox hBox = new HBox();
         hBox.setSpacing(30);
-        hBox.setStyle("-fx-background-color: linear-gradient(to right, #A1C4FD, #C2E9FB); " + // Blue gradient
-                "-fx-border-color: #4A90E2; " + // Blue border for the task container
-                "-fx-border-width: 2px; " + // Set border width
-                "-fx-border-radius: 10; " + // Rounded corners for the border
-                "-fx-background-radius: 10; " + // Rounded corners for the background
-                "-fx-padding: 15; " +
+        hBox.setStyle("-fx-background-color: linear-gradient(to right, #E6F7E6, #D1F0D1); " +
+                "-fx-border-color: #90C490; " +
+                "-fx-border-width: 1.5px; " +
+                "-fx-border-radius: 8; " +
+                "-fx-background-radius: 8; " +
+                "-fx-padding: 12; " +
                 "-fx-spacing: 30; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);");
+                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 3, 0, 1, 1);");
 
         Label taskNameLabel = new Label("Task: " + newTaskNametxt.getText().trim());
-        taskNameLabel.setStyle("-fx-font-size: 18px; " + // Reduced font size for task name
+        taskNameLabel.setStyle("-fx-font-size: 16px; " +
                 "-fx-font-weight: bold; " +
-                "-fx-text-fill: #333333; " +
-                "-fx-padding-right: 20px;"); // Padding to separate task name slightly from other elements
+                "-fx-text-fill: #2F4F2F;"); // Dark green
         hBox.getChildren().add(taskNameLabel);
 
         String taskDate = newTaskDatetxt.getValue().toString();
         Label dateLabel = new Label("Date: " + taskDate);
-        dateLabel.setStyle("-fx-font-size: 16px; " +
-                "-fx-text-fill: #555555;"); // Slightly lighter gray for the date
+        dateLabel.setStyle("-fx-font-size: 14px; " +
+                "-fx-text-fill: #6B8E6B;");
         hBox.getChildren().add(dateLabel);
 
         CheckBox checkBox = new CheckBox("Completed");
         checkBox.setStyle("-fx-font-size: 14px; " +
-                "-fx-text-fill: #444444; " +
+                "-fx-text-fill: #4C7A4C; " +
                 "-fx-cursor: hand; " +
-                "-fx-alignment: center;"); // No color change for checkbox
+                "-fx-alignment: center;");
         hBox.getChildren().add(checkBox);
-
-
 
         todolistview.getItems().add(hBox);
 
         checkBox.setOnAction(e -> {
             if (checkBox.isSelected()) {
-                // Extract the task name from the Label in the HBox
                 String taskName = taskNameLabel.getText().replace("Task: ", "").trim();
                 String currentDate = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
-                System.out.println("Marking task as completed: " + taskName + " on " + currentDate);
-
-                boolean taskCompleted = CompletedTaskController.getInstance().completedTask(taskName, currentDate);
-                boolean taskDeleted = ToDoListController.getInstance().deleteCompletedTask(taskName);
-
-                System.out.println("Task Completed: " + taskCompleted);
-                System.out.println("Task Deleted: " + taskDeleted);
-
-                if (taskCompleted && taskDeleted) {
+                if (CompletedTaskController.getInstance().completedTask(taskName, currentDate) &&
+                        ToDoListController.getInstance().deleteCompletedTask(taskName)) {
                     new Alert(Alert.AlertType.INFORMATION, "Task Finished").show();
                     todolistview.getItems().remove(hBox);
                 } else {
@@ -180,16 +165,14 @@ public class ToDoListFormController implements Initializable {
         }
     }
 
-
     private void cleartxts() {
         newTaskNametxt.clear();
         newTaskDatetxt.setValue(null);
     }
 
     public void btcViewCompletedTasksOnAction(ActionEvent actionEvent) throws IOException {
-        Stage stage=new Stage();
+        Stage stage = new Stage();
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/completed_task.fxml"))));
         stage.show();
-
     }
 }
